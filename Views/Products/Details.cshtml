@@ -1,0 +1,66 @@
+﻿@model Multilinks.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Category.Category_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category.Category_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_PurchasePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_PurchasePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_SalePrice)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product_SalePrice)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Product_Picture)
+        </dt>
+
+        <dd>
+            <img height="100px" width="100px" src="@Url.Content(Model.Product_Picture)" />
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Product_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

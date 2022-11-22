@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Multilinks.Models.Order>
+<center><h2>PurchaseReport</h2></center>
+@using (Html.BeginForm("PurchaseReport", "Report", FormMethod.Post))
+{
+    <table class="table table-bordered">
+        <tr>
+            <td>Date From</td>
+            <td><input type="datetime-local" name="DateFrom" value="@ViewBag.DateFrom" class="form-control" /></td>
+            <td>Date to</td>
+            <td><input type="datetime-local" name="DateTo" value="@ViewBag.DateTo" class="form-control" /></td>
+            <td><button type="submit" class="btn" style="background-color: #4ECDC4; color:black;">Generate Report</button></td>
+        </tr>
+        <tr>
+            <td>Category</td>
+            <td>@Html.DropDownList("Category", ViewBag.Category as SelectList, "Select", htmlAttributes: new { @class = "form-control" })</td>
+            <td>Product</td>
+            <td>@Html.DropDownList("Product", ViewBag.Product as SelectList, "Select", htmlAttributes: new { @class = "form-control" })</td>
+            <td><button class="btn" style="background-color: #4ECDC4; color:black;">Print</button></td>
+        </tr>
+    </table>
+}
+
+<table class="table table-bordered">
+    <tr style="background-color: #4ECDC4; color:black; font-size:15px;">
+        <th>Order Date</th>
+        <th>Order_Status</th>
+        <th>Order_Name</th>
+        <th>Order_Email	</th>
+        <th>Order_Contact</th>
+        <th>Order_Address</th>
+        <th>Order_City</th>
+        <th>Order_Type	</th>
+        <th>Invoice</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@DateTime.Parse(item.Order_Date.ToString()).ToLongDateString();</td>
+            <td>@item.Order_Status</td>
+            <td>@item.Order_Name</td>
+            <td>@item.Order_Email</td>
+            <td>@item.Order_Contact</td>
+            <td>@item.Order_Address</td>
+            <td>@item.Order_City</td>
+            <td>@item.Order_Type</td>
+            <td><a href="@Url.Action("Invoice","Report" , new {id=item.Order_ID })" class="btn" style="background-color: #4ECDC4; color: black;">View Invoice</a></td>
+
+        </tr>
+    }
+
+</table>
+

@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Multilinks.Models.Company>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Company_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Company_Contact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Company_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Company_Logo)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company_Contact)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Company_Address)
+        </td>
+        <td>
+            <img src="@Url.Content(item.Company_Logo)" width="100px" height="100px"/>
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Company_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Company_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Company_ID })
+        </td>
+    </tr>
+}
+
+</table>

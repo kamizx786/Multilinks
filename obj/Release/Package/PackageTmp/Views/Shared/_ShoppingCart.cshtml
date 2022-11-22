@@ -1,0 +1,46 @@
+﻿@using Multilinks.Models
+@{
+    int row = 0;
+    double grandTotal = 0;
+}
+
+
+@if (Session["MyCart"] != null)
+{
+    foreach (var item in (List<Product>)Session["MyCart"])
+    {
+        <li>
+            <a href="#" class="photo"><img src="@Url.Content(item.Product_Picture)" class="cart-thumb" alt="" /></a>
+            <h6><a href="#">@item.Product_Name </a></h6>
+            <p>@item.Pro_Quantity x-Rs <span class="price">@item.Product_SalePrice</span></p>
+            <p>
+                <span class="price">
+                    <a href="@Url.Action("MinusFromCart","Home", new {Rowno= row})" class="btn btn btn-default hvr-hover btn-cart fa fa-minus"></a>
+                    @item.Pro_Quantity
+                    <a href="@Url.Action("PlustoCart","Home", new {Rowno=row})" class="btn btn btn-default hvr-hover btn-cart fa fa-plus"></a>
+                    <a href="@Url.Action("RemoveFromCart","Home", new {Rowno=row})" class="btn btn btn-default hvr-hover btn-cart fa fa-trash" style="margin-left:20px"></a>
+                </span>
+            </p>
+            <p>
+                <span class="float-right"><strong>Total</strong>: @(item.Product_SalePrice*item.Pro_Quantity)</span>
+            </p>
+        </li>
+        double subTotal = Convert.ToDouble(item.Pro_Quantity) * Convert.ToDouble(item.Product_SalePrice);
+        grandTotal += subTotal;
+        row++;
+    }
+    Session["Totalamount"] = grandTotal;
+}
+         
+@if (Session["MyCart"] == null || row == 0)
+{
+    <h5 style="text-align:center;">Cart is empty</h5>
+    <a href="@Url.Action("Shop","Home")" class="btn" style="background-color: #a4c639; color:white;">Click Here To Shop</a>
+}
+<li class="total">
+    <a href="@Url.Action("Cart","Home")" class="btn btn-default hvr-hover btn-cart">VIEW CART</a>
+    <span class="float-right">
+        <strong>Total</strong>:@grandTotal
+    </span>
+</li>
+

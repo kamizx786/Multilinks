@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Multilinks.Models.Product>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a class="btn btn-warning " href="@Url.Action("Create","Products")">Add New Product</a>
+</p>
+<table class="table table-bordered table-hover">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Category.Category_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_PurchasePrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_SalePrice)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Product_Picture)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Category.Category_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_PurchasePrice)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Product_SalePrice)
+           
+        </td>
+        <td>
+            <img height="50px" width="50px" src="@Url.Content(item.Product_Picture)" />
+        </td>
+        <td>
+            <a class="btn btn_primary glyphicon glyphicon-edit " href="@Url.Action("Edit","Products", new { id=item.Product_ID })"></a>|
+            <a class="btn btn_primary glyphicon glyphicon-book " href="@Url.Action("Details","Products", new { id=item.Product_ID })"></a>|
+            <a class="btn btn_primary glyphicon glyphicon-trash " href="@Url.Action("Delete","Products", new { id=item.Product_ID })"></a>
+        </td>
+    </tr>
+}
+
+</table>

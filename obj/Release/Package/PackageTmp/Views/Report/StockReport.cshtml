@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Multilinks.Models.Product>
+@{
+    int Totalquan = 0;
+}
+<div id="printArea">
+    <center><h2>Stock Report</h2></center>
+    @using (Html.BeginForm("StockReport", "Report", FormMethod.Post))
+    {
+        <table class="table table-bordered">
+            <tr>
+                <td>Date to</td>
+                <td><input type="datetime-local" name="DateTo" value="@ViewBag.DateTo" class="form-control" /></td>
+                <td id="btn1"><button  type="submit" class="btn" style="background-color: #4ECDC4; color:black;">Generate Report</button></td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>@Html.DropDownList("Category", ViewBag.Category as SelectList, "Select", htmlAttributes: new { @class = "form-control" })</td>
+                <td>Product</td>
+                <td>@Html.DropDownList("Product", ViewBag.Product as SelectList, "Select", htmlAttributes: new { @class = "form-control" })</td>
+                <td  id="btn2"><button class="btn" onclick="PrintFunction('printArea')" style="background-color: #4ECDC4; color:black;">Print</button></td>
+            </tr>
+        </table>
+    }
+    <table class="table table-bordered">
+        <tr style="background-color: #4ECDC4; color:black; font-size:15px;">
+            <th>Product Picture</th>
+            <th>Product Name</th>
+            <th>Product Description</th>
+            <th>Product SalePrice</th>
+            <th>Product PurchasePrice</th>
+            <th>Stock Available</th>
+        </tr>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <th><img src="@Url.Content(p.Product_Picture)" height="100px" width="100px" /></th>
+                <td>@p.Product_Name</td>
+                <td>@p.Product_Description</td>
+                <td>@p.Product_SalePrice</td>
+                <td>@p.Product_PurchasePrice</td>
+                <td>@(p.OrderDetails.Where(x=>x.Order.Order_Type=="Purchase" || x.Order.Order_Date >= Convert.ToDateTime(ViewBag.DateTo)).Sum(x=>x.Quantity)- p.OrderDetails.Where(x => x.Order.Order_Type == "Sale" || x.Order.Order_Date >= Convert.ToDateTime(ViewBag.DateTo)).Sum(x => x.Quantity))</td>
+            </tr>
+            Totalquan += int.Parse(p.OrderDetails.Where(x => x.Order.Order_Type == "Purchase" || x.Order.Order_Date >= Convert.ToDateTime(ViewBag.DateTo)).Sum(x => x.Quantity).ToString()) - int.Parse(p.OrderDetails.Where(x => x.Order.Order_Type == "Sale" || x.Order.Order_Date >= Convert.ToDateTime(ViewBag.DateTo)).Sum(x => x.Quantity).ToString());
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total Stock</td>
+            <td>@Totalquan</td>
+        </tr>
+
+    </table>
+</div>
+<script>
+    function PrintFunction(el) {
+        var restorepage = $('body').html();
+        var b1 = document.getElementById('btn1');
+        var b2 = document.getElementById('btn2');
+        b1.style.display = 'none';
+        b2.style.display = 'none';
+        var printcontent = $('#' + el).clone();       
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+    }
+</script>
+
+

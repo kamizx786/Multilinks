@@ -1,0 +1,87 @@
+﻿@model IEnumerable<Multilinks.Models.Order>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Customer.Customer_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_Status)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_Type)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_Contact)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Order_PaymentMode)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Customer.Customer_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_Date)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_Status)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_Type)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_Email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_Contact)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_Address)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_City)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Order_PaymentMode)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Order_ID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Order_ID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Order_ID })
+        </td>
+    </tr>
+}
+
+</table>

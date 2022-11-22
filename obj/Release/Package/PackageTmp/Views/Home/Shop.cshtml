@@ -1,0 +1,215 @@
+﻿@model Multilinks.Models.ShopModel
+@{
+    
+    Layout = "~/Views/Shared/_Layoutcustomer.cshtml";
+
+}
+<head>
+    <link rel="stylesheet"  href="~/Content/Customer/assets/css/StyleSheet1.css" />
+</head>
+<div class="page-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Products</h1>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("IndexCustomer","Home")">Home</a></li>
+                    <li class="breadcrumb-item active">
+                        <a href="@Url.Action("Shop","Home")">Shop</a>
+                       
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Side Bar-->
+<div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-3 col-sm-12 col-xs-12 sidebar-shop-left">
+                <div class="product-categori">
+                    <div class="search-product">
+                        <form action="#">
+                            <input class="form-control" placeholder="Search here..." type="text">
+                            <button type="submit"> <i class="fa fa-search"></i> </button>
+                        </form>
+                    </div>
+                    <div class="filter-sidebar-left">
+                        <div class="title-left">
+                            <h3 style="margin-bottom: 10px;">Categories</h3>
+                        </div>
+                        <div class="list-group list-group-collapse list-group-sm list-group-tree" id="list-group-men" data-children=".sub-men">
+                            <div class="list-group-collapse sub-men">
+                                <a class="list-group-item list-group-item-action" href="#sub-men1" data-toggle="collapse" aria-expanded="true" aria-controls="sub-men1">
+                                    PC <small class="text-muted"></small>
+                                </a>
+                                <div class="collapse show" id="sub-men1" data-parent="#list-group-men">
+                                    <div class="list-group">
+                                        @foreach (var c in Model.Cat.Where(x => x.Category_Type == "PC"))
+                                        {
+
+                                            <a href="@Url.Action("Shop","Home",new { id = c.Category_ID })" class="list-group-item list-group-item-action active">@c.Category_Name <small class="text-muted">(@c.Products.Count())</small></a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-collapse sub-men">
+                                <a class="list-group-item list-group-item-action" href="#sub-men2" data-toggle="collapse" aria-expanded="true" aria-controls="sub-men2">
+                                    Accessories <small class="text-muted"></small>
+                                </a>
+                                <div class="collapse show" id="sub-men2" data-parent="#list-group-men">
+                                    <div class="list-group">
+                                        @foreach (var c in Model.Cat.Where(x => x.Category_Type == "Accessories"))
+                                        {
+
+                                            <a href="@Url.Action("Shop","Home",new { id = c.Category_ID })" class="list-group-item list-group-item-action active">@c.Category_Name <small class="text-muted">(@c.Products.Count())</small></a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="list-group-collapse sub-men">
+                                <a class="list-group-item list-group-item-action" href="#sub-men3" data-toggle="collapse" aria-expanded="true" aria-controls="sub-men3">
+                                  Android Mobiles <small class="text-muted"></small>
+                                </a>
+                                <div class="collapse show" id="sub-men3" data-parent="#list-group-men">
+                                    <div class="list-group">
+                              
+                                        @foreach (var c in Model.Cat.Where(x=>x.Category_Type=="Mobiles"))
+                                        {
+
+                                            <a href="@Url.Action("Shop","Home",new { id = c.Category_ID })" class="list-group-item list-group-item-action active">@c.Category_Name <small class="text-muted">(@c.Products.Count())</small></a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--Sidebar end-->
+            <div class="col-xl-9 col-lg-9 col-sm-12 col-xs-12">
+                <div class="right-product-box">
+                    <div class="product-item-filter row">
+                        <div class="col-12 col-sm-8 text-center text-sm-left">
+                            <div class="toolbar-sorter-right">
+                                <span>Sort by </span>
+                                <select id="basic" class="selectpicker show-tick form-control" data-placeholder="$ USD">
+                                    <option data-display="Select">Nothing</option>
+                                    <option value="1">Popularity</option>
+                                    <option value="2">High Price → High Price</option>
+                                    <option value="3">Low Price → High Price</option>
+                                    <option value="4">Best Selling</option>
+                                </select>
+                            </div>
+                            <p>Showing all 4 results</p>
+                        </div>
+                        <div class="col-12 col-sm-4 text-center text-sm-right">
+                            <ul class="nav nav-tabs ml-auto">
+                                <li>
+                                    <a class="nav-link active" href="#grid-view" data-toggle="tab"> <i class="fa fa-th"></i> </a>
+                                </li>
+                                <li>
+                                    <a class="nav-link" href="#list-view" data-toggle="tab"> <i class="fa fa-list-ul"></i> </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="services">
+                        <div class="container">
+                            <div class="row">
+
+                                @foreach (var p in Model.Pro)
+                                {
+                                    <div class="col-md-4">
+                                        <div class="service-item">
+                                            <img src="@Url.Content(p.Product_Picture)" alt="" height="270px" width="270px">
+                                            <div class="down-content">
+                                                <h4>@p.Product_Name</h4>
+                                                <div style="margin-bottom:10px;">
+                                                    <span>
+                                                        Rs @p.Product_SalePrice
+                                                    </span>
+                                                </div>
+
+                                                <p>@p.Product_Description </p>
+                                                <!--
+                                                <a class="btn filled-button" onclick="addToCart(event, '@(p.Product_ID)')">
+                                                    Add to Cart
+                                                </a>
+                                                    -->
+                                                @if ((p.OrderDetails.Where(x => x.Order.Order_Type == "Purchase").Sum(x => x.Quantity) - p.OrderDetails.Where(x => x.Order.Order_Type == "Sale").Sum(x => x.Quantity)) > 0)
+                                                {
+                                                    <a href="@Url.Action("AddtoCart", "Home", new { id = p.Product_ID })" class="filled-button">Add To Cart</a>
+                                                }
+                                                else
+                                                {
+                                                    <h6 style="color:red;">Item out of STock</h6>
+                                                }
+                                                <a href="@Url.Action("ProductDetail","Home", new {id=p.Product_ID })" class="filled-button">View More</a>
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                    </div>
+                                }
+
+                            </div>
+                            <br>
+                            <br>
+
+                            <nav>
+                                <ul class="pagination pagination-lg justify-content-center">
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Previous">
+                                            <span aria-hidden="true">«</span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="#" aria-label="Next">
+                                            <span aria-hidden="true">»</span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script type="text/javascript">
+      var addToCartUrl = "@Url.Action("AddtoCart", "Home")";
+
+// you only need the productId parameter if you're not passing in the event
+function addToCart(e, productId) {
+    // prevent navigating away from the page on <a> tag click
+    e.preventDefault();
+
+    // make ajax request
+    $.ajax({
+        url: addToCartUrl,
+        data: { id: productId },
+        success: function (data) {
+            if (confirm(data)) {
+                window.location.href = "@Url.Action("Shop","Home")";
+            }
+        }
+
+    });
+}
+</script>

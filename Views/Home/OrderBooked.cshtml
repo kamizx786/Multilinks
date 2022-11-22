@@ -1,0 +1,128 @@
+﻿@model IEnumerable<Multilinks.Models.Order>
+@using Multilinks.Models;
+@{
+    Model1 db = new Model1();
+    double TotalAmount = 0;
+    int TotalQuan = 0;
+    ViewBag.Title = "Order Booked";
+    Layout = "~/Views/Shared/_Layoutcustomer.cshtml";
+
+}
+<div class="page-heading header-text"  >
+    <div class="container" >
+        <div class="row">
+            <div class="col-lg-12 col-md-12" id="printArea">
+                <center><h2>Order Booked Summary</h2></center>
+                <table class="" >
+                    <tr>
+                        <td width="33%"><img src="@Url.Content(db.Companies.Select(x => x.Company_Logo).FirstOrDefault())" height="100px" width="100px" /></td>
+                        <td width="33%">
+                            @db.Companies.Select(x => x.Company_Email).FirstOrDefault() <br />
+                            @db.Companies.Select(x => x.Company_Contact).FirstOrDefault()<br />
+                            @db.Companies.Select(x => x.Company_Address).FirstOrDefault()
+                        </td>
+                    </tr>
+                 
+                </table>
+                @foreach (var i in Model)
+                {
+
+
+                    <table class="table table-bordered">
+                        <tr class="table-borderless">
+                            <td></td>
+                            <td><button id="btn1" class="btn btn-dark" onclick="PrintFunction('printArea')">Print Invoice</button></td>
+                            <td></td>
+                            <td></td>
+
+                        </tr>
+                        <tr>
+                            <td>Order Number</td>
+                            <td>@i.Order_ID</td>
+                            <td>Order Name</td>
+                            <td>@i.Order_Name</td>
+                        </tr>
+                        <tr>
+                            <td>Order Date</td>
+                            <td>@i.Order_Date</td>
+                            <td>Order Contact</td>
+                            <td>@i.Order_Contact</td>
+                        </tr>
+                        <tr>
+                            <td>Order Status</td>
+                            <td>@i.Order_Status</td>
+                            <td>Order Email</td>
+                            <td>@i.Order_Email</td>
+                        </tr>
+                        <tr>
+                            <td>Order Address</td>
+                            <td>@i.Order_Address</td>
+                            <td>Order City</td>
+                            <td>@i.Order_City</td>
+                        </tr>
+          
+                    </table>
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>Product Picture</th>
+                            <th>Product Name</th>
+                            <th>Product Price</th>
+                            <th>Product Quantatiy</th>
+                            <th>Total</th>
+                        </tr>
+                        @foreach (var od in i.OrderDetails)
+                        {
+                            <tr>
+                                <td><img src="@Url.Content(od.Product.Product_Picture)" height="100px" width="100px" /></td>
+                                <td>@od.Product.Product_Name</td>
+                                @if (i.Order_Type == "Purchase")
+                                {
+                                    <td>@od.Purchase_Price</td>
+                                }
+                                else
+                                {
+                                    <td>@od.Sale_Price</td>
+                                }
+                                <td>@od.Quantity</td>
+                                @if (i.Order_Type == "Purchase")
+                                {
+                                    <td>@(double.Parse(od.Purchase_Price.ToString()) * int.Parse(od.Quantity.ToString()))</td>
+                                }
+                                else
+                                {
+                                    <td>@(double.Parse(od.Sale_Price.ToString()) * int.Parse(od.Quantity.ToString()))</td>
+                                }
+                            </tr>
+                            if (i.Order_Type == "Purchase")
+                            {
+                                TotalAmount += (double.Parse(od.Purchase_Price.ToString()) * int.Parse(od.Quantity.ToString()));
+                            }
+                            else
+                            {
+                                TotalAmount += (double.Parse(od.Sale_Price.ToString()) * int.Parse(od.Quantity.ToString()));
+                            }
+                            TotalQuan += int.Parse(od.Quantity.ToString());
+                        }
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td>Total Quantatity: @TotalQuan</td>
+                            <td>Total Amount :@TotalAmount</td>
+                        </tr>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+    </div>
+<script>
+    function PrintFunction(el) {
+        var restorepage = $('body').html();
+        var b1 = document.getElementById('btn1');
+        b1.style.display = 'none';
+        var printcontent = $('#' + el).clone();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+    }
+</script>

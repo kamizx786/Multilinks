@@ -1,0 +1,94 @@
+@model IEnumerable<Multilinks.Models.Product>
+@{
+    Layout = "~/Views/Shared/_Layoutcustomer.cshtml";
+}
+
+
+@foreach (var p in Model)
+{
+    <div class="page-heading header-text">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1><small><del><sup>$</sup>1999 </del></small> &nbsp; <sup>$</sup>@p.Product_SalePrice</h1>
+                    <span>
+                       @p.Product_Name
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="services">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7">
+                    <div>
+                        <img src="@Url.Content(p.Product_Picture)" alt="" class="img-fluid wc-image">
+                    </div>
+
+                    <br>
+
+                    <div class="row">
+                        <div class="col-sm-4 col-6">
+                            <div>
+                                <img src="@Url.Content(p.Product_Picture)" alt="" class="img-fluid">
+                            </div>
+                            <br>
+                        </div>
+                        <div class="col-sm-4 col-6">
+                            <div>
+                                <img src="@Url.Content(p.Product_Picture)" alt="" class="img-fluid">
+                            </div>
+                            <br>
+                        </div>
+                        <div class="col-sm-4 col-6">
+                            <div>
+                                <img src="@Url.Content(p.Product_Picture)" alt="" class="img-fluid">
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
+                    <br>
+                </div>
+
+                <div class="col-md-5">
+                    <div class="sidebar-item recent-posts">
+                        <div class="sidebar-heading">
+                            <h4>Product Name </h4>
+                            <p>@p.Product_Name</p>
+                        </div>
+                        <h5>Description</h5>
+                        <div class="content">
+                            <p>@p.Product_Description</p>
+                        </div>
+                        <h5>Sale Price</h5>
+                        <div class="content">
+                            <p>@p.Product_SalePrice</p>
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <a href="@Url.Action("AddtoCart", "Home", new { id = p.Product_ID })" class="filled-button">Add to Cart</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <br>
+                </div>
+            </div>
+
+            <br>
+
+
+            <br>
+            <br>
+            <br>
+        </div>
+    </div>
+}

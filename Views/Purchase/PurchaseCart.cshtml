@@ -1,0 +1,125 @@
+﻿@using Multilinks.Models
+
+@{
+    int row = 0;
+    double grandTotal = 0;
+    double totQty = 0;
+}
+
+<div class="page-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Cart</h1>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("IndexAdmin","Home")">Home</a></li>
+                    <li class="breadcrumb-item active">
+                        <a href="@Url.Action("PurchaseCart","Purchase")">Shop</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <div class="container">
+        <center><h2>Cart Page</h2></center>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="table-main table-responsive">
+                    <table class="table table-bordered">
+                        <thead style="background-color: #a4c639;">
+                            <tr>
+                                <th>Images</th>
+                                <th>Product Name</th>
+                                <th>Price</th>
+                                <th>Quantity</th>
+                                <th>Total</th>
+                                <th>Remove</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Session["MyPurchase"] != null)
+                            {
+                                foreach (var item in (List<Product>)Session["MyPurchase"])
+                                {
+                                    <tr>
+                                        <td class="thumbnail-img">
+                                            <a href="#">
+                                                <img class="img-fluid" src="@Url.Content(item.Product_Picture)" alt="" height="50px" width="50px" />
+                                            </a>
+                                        </td>
+                                        <td class="name-pr">
+                                            <a href="#">
+                                                @item.Product_Name
+                                            </a>
+                                        </td>
+                                        <td class="price-pr">
+                                            <p>@item.Pro_Quantity xRs @item.Product_PurchasePrice</p>
+                                        </td>
+                                        <td class="quantity-box">
+                                            <a href="@Url.Action("MinusFromCart","Purchase", new {Rowno= row})" class="btn btn btn-default hvr-hover btn-cart fa fa-minus"></a>
+                                            @item.Pro_Quantity
+                                            <a href="@Url.Action("PlustoCart","Purchase", new {Rowno=row})" class="btn btn btn-default hvr-hover btn-cart fa fa-plus"></a>
+
+                                        </td>
+                                        <td class="total-pr">
+                                            <p>Total: @(item.Product_PurchasePrice * item.Pro_Quantity)</p>
+                                        </td>
+                                        <td class="remove-pr">
+                                            <a href="@Url.Action("RemoveFromCart","Purchase", new {Rowno=row})">
+                                                <i class="glyphicon glyphicon-trash"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    row++;
+                                    double subTotal = Convert.ToDouble(item.Pro_Quantity) * Convert.ToDouble(item.Product_PurchasePrice);
+                                    grandTotal += subTotal;
+                                    totQty += item.Pro_Quantity;
+
+                                }
+                                Session["PTotalamount"] = grandTotal;
+
+                            }
+                            @if (Session["MyPurchase"] == null || row == 0)
+                            {
+                                <tr>
+                                    <td colspan="6" style="text-align:center;">
+                                        <h5>
+                                            Cart is empty
+                                        </h5>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="text-align:right;">
+                                        <a href="@Url.Action("Purchase","Purchase")" class="btn btn-danger">Click Here To Add items to cart</a>
+                                    </td>
+                                </tr>
+                            }
+                        <tr class="table table-borderless">
+                            <td colspan="6" style="text-align:right;">
+                                <button class="btn" style="background-color: #a4c639;">Total Products:@Session["Pcount"]</button>
+                                <button class="btn" style="background-color: #a4c639;">Total Quantity:@totQty</button>
+                                <button class="btn" style="background-color: #a4c639;">GrandTotal: @grandTotal</button>
+                                <button class="btn" style="background-color: #a4c639;">
+                                    <a href="@Url.Action("PurchaseCheckout","Purchase")" style="color:black;">
+                                        Checkout
+                                    </a>
+                                </button>
+                            </td>     
+                        </tr>
+                        <tr class="table table-borderless">
+                            <td colspan="6">
+                                <button class="btn" style="background-color:white; color:red"><span>@ViewBag.Message</span></button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

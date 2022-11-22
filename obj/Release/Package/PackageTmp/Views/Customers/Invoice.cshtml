@@ -1,0 +1,97 @@
+﻿@model IEnumerable<Multilinks.Models.Order>
+@using Multilinks.Models;
+@{
+    Model1 db = new Model1();
+    Layout = "~/Views/Shared/_Layoutcustomer.cshtml";
+    double TotalAmount = 0;
+    int TotalQuan = 0;
+    ViewBag.Title = "Invoice";
+}
+<div class="page-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Recent Orders</h1>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("IndexCustomer","Home")">Home</a></li>
+                    <li class="breadcrumb-item active">
+                        <a href="@Url.Action("Shop","Home")">Shop</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<center><h2>Invoice</h2></center>
+
+    @foreach (var i in Model)
+    {
+
+
+    <table class="table table-bordered">
+       
+        <tr>
+            <td>Order Number</td>
+            <td>@i.Order_ID</td>
+            <td>Order Name</td>
+            <td>@i.Order_Name</td>
+        </tr>
+        <tr>
+            <td>Order Date</td>
+            <td>@i.Order_Date</td>
+            <td>Order Status</td>
+            <td>@i.Order_Status</td>
+        </tr>
+     
+    </table>
+    <table class="table table-bordered">
+        <tr>
+            <th>Product Picture</th>
+            <th>Product Name</th>
+            <th>Product Price</th>
+            <th>Product Quantatiy</th>
+            <th>Total</th>
+        </tr>
+        @foreach (var od in i.OrderDetails)
+        {
+            <tr>
+                <td><img src="@Url.Content(od.Product.Product_Picture)" height="100px" width="100px" /></td>
+                <td>@od.Product.Product_Name</td>
+                @if (i.Order_Type == "Purchase")
+                {
+                    <td>@od.Purchase_Price</td>
+                }
+                else
+                {
+                    <td>@od.Sale_Price</td>
+                }
+                <td>@od.Quantity</td>
+                @if (i.Order_Type == "Purchase")
+                {
+                    <td>@(double.Parse(od.Purchase_Price.ToString()) * int.Parse(od.Quantity.ToString()))</td>
+                }
+                else
+                {
+                    <td>@(double.Parse(od.Sale_Price.ToString()) * int.Parse(od.Quantity.ToString()))</td>
+                }
+            </tr>
+            if (i.Order_Type == "Purchase")
+            {
+                TotalAmount += (double.Parse(od.Purchase_Price.ToString()) * int.Parse(od.Quantity.ToString()));
+            }
+            else
+            {
+                TotalAmount += (double.Parse(od.Sale_Price.ToString()) * int.Parse(od.Quantity.ToString()));
+            }
+            TotalQuan += int.Parse(od.Quantity.ToString());
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td>Total Quantatity: @TotalQuan</td>
+            <td>Total Amount :@TotalAmount</td>
+        </tr>
+    </table>
+    }
+
+

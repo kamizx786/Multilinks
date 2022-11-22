@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Multilinks.Models.Order>
+@{ 
+    int n = 0;
+    int L = 5;
+}
+<div id="printArea">
+    <center><h2>Sale Report</h2></center>
+    @using (Html.BeginForm("SaleReport", "Report", FormMethod.Post))
+    {
+        <table class="table table-bordered">
+            <tr>
+                <td>Date From</td>
+                <td><input type="datetime-local" name="DateFrom" value="@ViewBag.DateFrom" class="form-control" /></td>
+                <td>Date to</td>
+                <td><input type="datetime-local" name="DateTo" value="@ViewBag.DateTo" class="form-control" /></td>
+                <td><button  id="btn1" type="submit" class="btn" style="background-color: #4ECDC4; color:black;">Generate Report</button></td>
+            </tr>
+            <tr>
+                <td>Category</td>
+                <td>@Html.DropDownList("Category", ViewBag.Category as SelectList, "Select", htmlAttributes: new { @class = "form-control" })</td>
+                <td>Product</td>
+                <td>@Html.DropDownList("Product", ViewBag.Product as SelectList, "Select", htmlAttributes: new { @class = "form-control" })</td>
+                <td><button  id="btn2" class="btn" onclick="PrintFunction('printArea')" style="background-color: #4ECDC4; color:black;">Print</button></td>
+            </tr>
+        </table>
+    }
+    <table class="table table-bordered">
+        <tr style="background-color: #4ECDC4; color:black; font-size:15px;">
+            <th>Sr #</th>
+            <th>Order Date</th>
+            <th>Order Status</th>
+            <th>C Name</th>
+            <th>Order Name</th>
+            <th>Order Email	</th>
+            <th>Order Contact</th>
+            <th>Order Address</th>
+            <th>Order City</th>
+            <th>Order Type	</th>
+            <th>Order PaymentMode	</th>
+            <th id="btn3">Edit</th>
+            <th id="btn4">Invoice</th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            n++;
+            <tr>
+                <td>#@n</td>
+                <td>@DateTime.Parse(item.Order_Date.ToString()).ToLongDateString();</td>
+                <td>@item.Order_Status</td>
+                <td>@item.Customer_FID</td>
+                <td>@item.Order_Name</td>
+                <td>@item.Order_Email</td>
+                <td>@item.Order_Contact</td>
+                <td>@item.Order_Address</td>
+                <td>@item.Order_City</td>
+                <td>@item.Order_Type</td>
+                <td>@item.Order_PaymentMode</td>
+                <td id="btn5"><a href="@Url.Action("Edit", "Orders", new { id = item.Order_ID })" class="btn"   style="background-color: #4ECDC4; color: black;">Edit</a></td>
+                <td id="btn6"><a href="@Url.Action("Invoice", "Report", new { id = item.Order_ID })" class="btn" style="background-color: #4ECDC4; color: black;">View Invoice</a></td>
+            </tr>
+        }
+
+    </table>
+   
+</div>
+
+<script>
+    function PrintFunction(el) {
+        var restorepage = $('body').html();
+        var b1 = document.getElementById('btn1');
+        var b2 = document.getElementById('btn2');
+        var b3 = document.getElementById('btn3');
+        var b4 = document.getElementById('btn4');
+        var b5 = document.getElementById('btn5');
+        var b6 = document.getElementById('btn6');
+        var n = @n;
+        for (let i = 0; i <= n; i++)
+        {
+            b5.style.display = 'none';
+            b6.style.display = 'none';
+        }
+        b1.style.display = 'none';
+        b2.style.display = 'none';
+        b3.style.display = 'none';
+        b4.style.display = 'none';
+
+
+        var printcontent = $('#' + el).clone();
+        $('body').empty().html(printcontent);
+        window.print();
+        $('body').html(restorepage);
+    }
+</script>
+
+

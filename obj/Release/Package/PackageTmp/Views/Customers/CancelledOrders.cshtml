@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Multilinks.Models.Order>
+@{
+    Layout = "~/Views/Shared/_Layoutcustomer.cshtml";
+    int n = 0;
+}
+<div class="page-heading header-text">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>Cancelled Orders</h1>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="@Url.Action("IndexCustomer","Home")">Home</a></li>
+                    <li class="breadcrumb-item active">
+                        <a href="@Url.Action("Shop","Home")">Shop</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div class="services">
+        <section>
+            <table class="table table-bordered">
+                <tr style="background-color: #4ECDC4; color:black; font-size:15px;">
+                    <th>Sr #</th>
+                    <th>Order Date</th>
+                    <th>Order Status</th>
+                    <th>Order Name</th>
+                    <th>Order PaymentMode</th>
+                    <th id="btn4">Invoice</th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    n++;
+                    <tr>
+                        <td>#@n</td>
+                        <td>@DateTime.Parse(item.Order_Date.ToString()).ToLongDateString();</td>
+                        <td>@item.Order_Status</td>
+                        <td>@item.Order_Name</td>
+                        <td>@item.Order_PaymentMode</td>
+                        <td id="btn6"><a href="@Url.Action("Invoice", "Customers", new { id = item.Order_ID })" class="btn" style="background-color: #4ECDC4; color: black;">View Invoice</a></td>
+                    </tr>
+                }
+
+            </table>
+        </section>
+    </div>
+</div>

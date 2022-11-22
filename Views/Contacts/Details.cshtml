@@ -1,0 +1,50 @@
+﻿@model Multilinks.Models.Contact
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Contact</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact_Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact_Message)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Message)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contact_Subject)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contact_Subject)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Contact_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

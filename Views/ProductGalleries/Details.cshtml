@@ -1,0 +1,34 @@
+﻿@model Multilinks.Models.ProductGallery
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ProductGallery</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Product.Product_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Product.Product_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gallery_URL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gallery_URL)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Gallery_ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

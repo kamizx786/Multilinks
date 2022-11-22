@@ -1,0 +1,272 @@
+﻿@using Multilinks.Models
+
+@{ 
+    Model1 db=new Model1();
+    Customer c = db.Customer.FirstOrDefault();
+     c = (Customer)Session["Customer"];
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/f5dbb7316c.js" crossorigin="anonymous"></script>
+    <title>Multilinks-Deal in Laptops and Mobiles</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/Customer/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Additional CSS Files -->
+    <link rel="stylesheet" href="~/Content/Customer/assets/css/fontawesome.css">
+    <link rel="stylesheet" href="~/Content/Customer/assets/css/style.css">
+    <link rel="stylesheet" href="~/Content/Customer/assets/css/owl.css">
+    <!-- navbarBootstrap CSS -->
+    <link rel="stylesheet" href="~/Content/Customer/assets/css/navcss/bootstrap.min.css">
+
+    <link rel="stylesheet" href="~/Content/Customer/assets/css/navcss/style.css">
+
+    <link rel="stylesheet" href="~/Content/Customer/assets/css/navcss/responsive.css">
+</head>
+
+<body>
+
+    <!-- ***** Preloader Start ***** -->
+    <div id="preloader">
+        <div class="jumper">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <!-- ***** Preloader End ***** -->
+    <!-- Header -->
+    <!-- Start Main Top -->
+    <header class="main-header">
+        <!-- Start Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light navbar-default bootsnav">
+            <div class="container">
+                <!-- Start Header Navigation -->
+                <div class="navbar-header">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbars-rs-food" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa fa-bars"></i>
+                    </button>
+                    <a class="navbar-brand" href="index.html"><img src="@Url.Content(db.Companies.Select(x=>x.Company_Logo).FirstOrDefault())" class="logo" width="150px" alt=""></a>
+                </div>
+                <!-- End Header Navigation -->
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="navbar-menu">
+                    <ul class="nav navbar-nav ml-auto" data-in="fadeInDown" data-out="fadeOutUp">
+                        <li class="nav-item active"><a class="nav-link" href="@Url.Action("IndexCustomer","Home")">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("About","Home")">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Shop","Home")">Products</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Cart","Home")">Cart</a></li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("Contact","Home")">Contact Us</a></li>
+
+                        <li class="dropdown">
+                            <a href="#" class="nav-link dropdown-toggle arrow" data-toggle="dropdown">Account</a>
+                            <ul class="dropdown-menu">
+                                @if (Session["Customer"] == null)
+                                {
+                                    <li><a href="@Url.Action("CustomerSignup", "Customers")">Signup</a></li>
+                                    <li><a href="@Url.Action("CustomerSignup", "Customers")">Login</a></li>
+                                }
+                                @if (Session["Customer"] != null)
+                                   
+                                {
+                                    <li><a href="@Url.Action("Edit","Customers",new {id=c.Customer_ID })">Manage Account Details</a></li>
+                                    <li><a href="@Url.Action("RecentOrders","Customers")">Recent Orders</a></li>
+                                    <li><a href="@Url.Action("CancelledOrders","Customers")">Cancelled Orders</a></li>
+                                    <li><a href="@Url.Action("CustomerLogout","Customers")">Logout</a></li>
+                                }
+                                </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="@Url.Action("AdminLogin","Home")"><i class="fa fa-user"></i></a></li>
+                    </ul>
+                </div>
+                <!-- /.navbar-collapse -->
+                <!-- Start Atribute Navigation -->
+                <div class="attr-nav">
+                    <ul>
+                        <li class="search"><a href="#"><i class="fa fa-search"></i></a></li>
+                        <li class="side-menu">
+                            <a href="#">
+                                <i class="fa fa-shopping-bag"></i>
+                                <span class="badge">@Session["count"]</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- End Atribute Navigation -->
+            </div>
+            <!-- Start Side Menu -->
+            <div class="side">
+                <a href="#" class="close-side"><i class="fa fa-times"></i></a>
+                <li class="cart-box">
+                    <ul class="cart-list">                     
+                            @{Html.RenderPartial("_ShoppingCart", (List<Product>)Session["MyCart"]);}                       
+                    </ul>
+                </li>
+            </div>
+            <!-- End Side Menu -->
+        </nav>
+        <!-- End Navigation -->
+    </header>
+    <!-- End Main Top -->
+    <!-- Start Top Search -->
+    <div class="top-search">
+        <div class="container">
+            <div class="input-group">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" placeholder="Search">
+                <span class="input-group-addon close-search"><i class="fa fa-times"></i></span>
+            </div>
+        </div>
+    </div>
+    <!-- End Top Search -->
+   
+        @RenderBody()
+   
+
+    <!-- Footer Starts Here -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 footer-item">
+                    <h4>MultiLinks</h4>
+                    <p>We Deal in All Kind of Laptops and Mobile</p>
+                    <ul class="social-icons">
+                        <li><a rel="nofollow" href="#" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 footer-item">
+                    <h4>Company Detail</h4>
+                    <ul class="menu-list">
+                        <li><a href="#"><img src="@Url.Content(db.Companies.Select(x => x.Company_Logo).FirstOrDefault())" width="150px" class="logo" /></a></li>
+                        <li><a href="#">@db.Companies.Select(x => x.Company_Email).FirstOrDefault()</a></li>
+                        <li><a href="#">@db.Companies.Select(x => x.Company_Contact).FirstOrDefault()</a></li>
+                        <li><a href="#">@db.Companies.Select(x => x.Company_Address).FirstOrDefault()</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 footer-item">
+                    <h4>Additional Pages</h4>
+                    <ul class="menu-list">
+                        <li><a href="#">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Terms</a></li>
+                    </ul>
+                </div>
+
+                <div class="col-md-3 footer-item last-item">
+                    <h4>Contact Us</h4>
+                    <div class="contact-form">
+                        @using (Html.BeginForm("ContactForm", "Home", FormMethod.Post))
+                        {
+                            <form id="contact footer-contact" action="" method="post">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <fieldset>
+                                            <input name="Contact_Name" type="text" class="form-control" id="name" placeholder="Full Name" required="">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <fieldset>
+                                            <input name="Contact_Email" type="text" class="form-control" id="email" placeholder="E-Mail Address" required="">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-12 col-md-12 col-sm-12">
+                                        <fieldset>
+                                            <input name="Contact_Subject" type="text" class="form-control" id="email" placeholder="E-Mail Address" required="">
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fieldset>
+                                            <textarea name="Contact_Message" rows="6" class="form-control" id="message" placeholder="Your Message" required=""></textarea>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <fieldset>
+                                            <button type="submit" onclick="SendMessage(e)" id="form-submit" class="filled-button">Send Message</button>
+                                        </fieldset>
+                                    </div>
+                                </div>
+                            </form>
+                        }
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </footer>
+
+    <div class="sub-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p>
+                        Copyright © 2020 Mulitlinks
+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/Content/Customer/vendor/jquery/jquery.min.js"></script>
+
+    <!-- Additional Scripts -->
+    <script src="~/Content/Customer/assets/js/custom.js"></script>
+    <script src="~/Content/Customer/assets/js/owl.js"></script>
+    <script src="~/Content/Customer/assets/js/slick.js"></script>
+    <script src="~/Content/Customer/assets/js/accordions.js"></script>
+
+
+    <script language="text/Javascript">
+
+        cleared[0] = cleared[1] = cleared[2] = 0; //set a cleared flag for each field
+        function clearField(t) {                   //declaring the array outside of the
+            if (!cleared[t.id]) {                      // function makes it static and global
+                cleared[t.id] = 1;  // you could use true and false, but that's more typing
+                t.value = '';         // with more chance of typos
+                t.style.color = '#fff';
+            }
+        }
+    </script>
+    <!-- ALL JS FILES -->
+    <script src="~/Content/Customer/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/Customer/assets/js/bootstrap.min.js"></script>
+    <!-- ALL PLUGINS -->
+    <script src="~/Content/Customer/assets/js/bootsnav.js"></script>
+
+
+</body>
+</html>
+<script type="text/javascript">
+      var addToCartUrl = "@Url.Action("ContactForm ","Home")";
+
+          // you only need the productId parameter if you're not passing in the event
+          function SendMessage(e) {
+              // prevent navigating away from the page on <a> tag click
+              e.preventDefault();
+
+    // make ajax request
+              $.ajax({
+                  url: addToCartUrl,
+                  data:"",
+        success: function (data) {
+                      alert(data);
+                  }
+
+              });
+      }
+</script>
